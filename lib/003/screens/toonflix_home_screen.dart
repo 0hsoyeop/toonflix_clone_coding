@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:toonflix_clone_coding/003/models/webtoon.dart';
 import 'package:toonflix_clone_coding/003/services/api_service.dart';
+import 'package:toonflix_clone_coding/003/widgets/webtoon_widgets.dart';
 
 class ToonflixHomeScreen extends StatelessWidget {
   ToonflixHomeScreen({super.key});
@@ -27,16 +28,11 @@ class ToonflixHomeScreen extends StatelessWidget {
         future: webtoons,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return ListView.separated(
-              scrollDirection: Axis.horizontal,
-              itemCount: snapshot.data!.length,
-              itemBuilder: (context, index) {
-                var webtoon = snapshot.data![index];
-                return Text(webtoon.title);
-              },
-              separatorBuilder: (context, index) {
-                return const SizedBox(width: 20.0);
-              },
+            return Column(
+              children: [
+                const SizedBox(height: 50.0),
+                Expanded(child: makeList(snapshot)),
+              ],
             );
           }
 
@@ -45,6 +41,20 @@ class ToonflixHomeScreen extends StatelessWidget {
           );
         },
       ),
+    );
+  }
+
+  ListView makeList(AsyncSnapshot<List<Webtoon>> snapshot) {
+    return ListView.separated(
+      scrollDirection: Axis.horizontal,
+      itemCount: snapshot.data!.length,
+      itemBuilder: (context, index) {
+        var webtoon = snapshot.data![index];
+        return WebtoonWidgets(title: webtoon.title, thumb: webtoon.thumb, id: webtoon.id);
+      },
+      separatorBuilder: (context, index) {
+        return const SizedBox(width: 40.0);
+      },
     );
   }
 }
