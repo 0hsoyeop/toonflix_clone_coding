@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:toonflix_clone_coding/003/models/webtoon.dart';
+import 'package:toonflix_clone_coding/003/services/api_service.dart';
 
 class ToonflixHomeScreen extends StatelessWidget {
-  const ToonflixHomeScreen({super.key});
+  ToonflixHomeScreen({super.key});
+
+  final Future<List<Webtoon>> webtoons = ApiService.getTodaysToons();
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +22,28 @@ class ToonflixHomeScreen extends StatelessWidget {
         foregroundColor: Colors.green,
         backgroundColor: Colors.white,
         elevation: 0.0,
+      ),
+      body: FutureBuilder(
+        future: webtoons,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return ListView.separated(
+              scrollDirection: Axis.horizontal,
+              itemCount: snapshot.data!.length,
+              itemBuilder: (context, index) {
+                var webtoon = snapshot.data![index];
+                return Text(webtoon.title);
+              },
+              separatorBuilder: (context, index) {
+                return const SizedBox(width: 20.0);
+              },
+            );
+          }
+
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        },
       ),
     );
   }

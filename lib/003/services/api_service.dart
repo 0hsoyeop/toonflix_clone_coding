@@ -5,10 +5,10 @@ import 'package:http/http.dart' as http;
 import 'package:toonflix_clone_coding/003/models/webtoon.dart';
 
 class ApiService {
-  final String baseUrl = 'https://webtoon-crawler.nomadcoders.workers.dev';
-  final String today = 'today';
+  static const String baseUrl = 'https://webtoon-crawler.nomadcoders.workers.dev';
+  static const String today = 'today';
 
-  Future<List<Webtoon>> getTodaysToons() async {
+  static Future<List<Webtoon>> getTodaysToons() async {
     List<Webtoon> webtoonInstances = [];
 
     final url = Uri.parse('$baseUrl/$today');
@@ -19,7 +19,6 @@ class ApiService {
 
       for (var webtoon in webtoons) {
         webtoonInstances.add(Webtoon.fromJson(webtoon));
-        print(webtoonInstances.toList());
       }
       return webtoonInstances;
     }

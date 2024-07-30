@@ -5,8 +5,6 @@ import 'package:toonflix_clone_coding/003/services/api_service.dart';
 import '001/widgets/main-001.dart';
 
 void main() {
-  ApiService().getTodaysToons();
-
   runApp(const App());
 }
 
@@ -33,7 +31,7 @@ class _AppState extends State<App> {
         ),
         cardColor: const Color(0xFFF4EDDB),
       ),
-      home: const ToonflixHomeScreen(),
+      home: ToonflixHomeScreen(),
     );
   }
 }
